@@ -1,0 +1,14 @@
+
+Hope you enjoy your new logo, here are the people that
+made your beautiful logo happen :)
+font name: FLORLRG_
+font link: https://www.fontsquirrel.com/fonts/Florante-at-Laura
+font author: Nyek!
+font author site: 
+
+
+icon designer: nopixel
+icon designer link: /creator/nopixel/
+        
+{"bg":"#5B359D","icon":"#9563C5","font":"#FFFFFF","slogan":"#ffffff"}
+      

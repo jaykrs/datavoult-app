@@ -1,21 +1,29 @@
-/** @type {import('next').NextConfig} */
+/** @type {import("next").NextConfig} */
 const nextConfig = {
-    reactStrictMode: true,
-    serverRuntimeConfig: {
-        dbConfig: {
-            host: 'localhost',
-            port: 3306,
-            user: 'root',
-            password: 'Welcome@0',
-            database: 'datavoult-app'
-        },
-        secret: 'THIS IS USED TO SIGN AND VERIFY JWT TOKENS, REPLACE IT WITH YOUR OWN SECRET, IT CAN BE ANY STRING'
-    },
-    publicRuntimeConfig: {
-        apiUrl: process.env.NODE_ENV === 'development'
-            ? 'http://localhost:3000/api' // development api
-            : 'http://localhost:3000/api' // production api
-    }
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "cdn.sanity.io",
+        port: ""
+      },
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+        port: ""
+      },
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+        port: ""
+      },
+      {
+        protocol: "https",
+        hostname: "pub-b7fd9c30cdbf439183b75041f5f71b92.r2.dev",
+        port: ""
+      }
+    ]
+  }
 };
 
 export default nextConfig;
