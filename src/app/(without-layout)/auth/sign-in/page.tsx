@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
+
 export const metadata: Metadata = {
   title: "Sign in",
 };
@@ -25,14 +26,14 @@ export default function SignIn() {
               <Link className="mb-10 inline-block" href="/" >
                 <Image
                   className="hidden dark:block"
-                  src={"/images/logo/logo.svg"}
+                  src={"/images/logo/default-monochrome-black.svg"}
                   alt="Logo"
                   width={176}
                   height={32}
                 />
                 <Image
                   className="dark:hidden"
-                  src={"/images/logo/logo-dark.svg"}
+                  src={"/images/logo/default-monochrome-black.svg"}
                   alt="Logo"
                   width={176}
                   height={32}

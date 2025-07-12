@@ -5,6 +5,10 @@ import React, { useState } from "react";
 import InputGroup from "../FormElements/InputGroup";
 import { Checkbox } from "../FormElements/checkbox";
 
+import { PrismaClient } from '@prisma/client';
+
+
+
 export default function SigninWithPassword() {
   const [data, setData] = useState({
     email: process.env.NEXT_PUBLIC_DEMO_USER_MAIL || "",
@@ -21,15 +25,38 @@ export default function SigninWithPassword() {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+signin(data.email , data.password);
+console.log(data.email);
 
-    // You can remove this code block
+// You can remove this code block
     setLoading(true);
-
+e.preventDefault();
     setTimeout(() => {
       setLoading(false);
     }, 1000);
+  };
+
+  const signin = async (email : string, password : string) =>  {
+    try {
+      const res = await fetch("http://localhost:3000/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      
+
+      if (res.headers.get('x-middleware-set-cookie')) {
+        const authorizationToken = res.headers.get('x-middleware-set-cookie');
+      }
+
+    }catch (err) {
+      console.error(err);
+    }
+    
   };
 
   return (
