@@ -31,8 +31,13 @@ export async function POST(request: Request) {
     { userId: user.id, username: user.email },
     process.env.JWT_SECRET!
   );
+const data = {
+  "email" : user.email,
+  "name" : user.name,
+  "role" : user.userrole
+};
 
-  const response = NextResponse.json({ message: 'Login successful' });
+  const response = NextResponse.json({ message: 'Login successful' , data});
   response.cookies.set('authToken', token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
@@ -40,6 +45,5 @@ export async function POST(request: Request) {
     maxAge: Number(process.env.JWT_EXPIRES_IN),
     path: '/'
   });
-
   return response;
 }

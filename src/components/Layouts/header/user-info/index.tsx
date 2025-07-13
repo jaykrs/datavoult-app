@@ -11,15 +11,27 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { LogOutIcon, SettingsIcon, UserIcon } from "./icons";
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 export function UserInfo() {
   const [isOpen, setIsOpen] = useState(false);
-
-  const USER = {
-    name: "John Smith",
-    email: "johnson@nextadmin.com",
+  let USER = {
+    name:  typeof window !== 'undefined' && localStorage ? localStorage.getItem("userName") : "John",
+    email: typeof window !== 'undefined' && localStorage ? localStorage.getItem("userEmail") : "John@email.com",
     img: "/images/user/user-03.png",
   };
+const router = useRouter();
+useEffect(() => {
+    const token =  localStorage.getItem("userToken");
+    USER.name = "Akash";
+    if(!token) 
+    {
+      router.push("/auth/sign-in");
+      console.log("Not authenticated");
+    }
+    
+  }, []); // Runs once after component mounts
 
   return (
     <Dropdown isOpen={isOpen} setIsOpen={setIsOpen}>

@@ -4,18 +4,15 @@ import Link from "next/link";
 import React, { useState } from "react";
 import InputGroup from "../FormElements/InputGroup";
 import { Checkbox } from "../FormElements/checkbox";
-
-import { PrismaClient } from '@prisma/client';
-
-
+import { useRouter } from 'next/navigation';
 
 export default function SigninWithPassword() {
   const [data, setData] = useState({
-    email: process.env.NEXT_PUBLIC_DEMO_USER_MAIL || "",
+    username: process.env.NEXT_PUBLIC_DEMO_USER_MAIL || "",
     password: process.env.NEXT_PUBLIC_DEMO_USER_PASS || "",
     remember: false,
   });
-
+const router = useRouter();
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,8 +23,8 @@ export default function SigninWithPassword() {
   };
 
  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-signin(data.email , data.password);
-console.log(data.email);
+signin(data.username , data.password);
+console.log(data.username);
 
 // You can remove this code block
     setLoading(true);
@@ -37,20 +34,28 @@ e.preventDefault();
     }, 1000);
   };
 
-  const signin = async (email : string, password : string) =>  {
+  const signin = async (username : string, password : string) =>  {
     try {
       const res = await fetch("http://localhost:3000/api/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ username, password }),
       });
 
       
 
       if (res.headers.get('x-middleware-set-cookie')) {
         const authorizationToken = res.headers.get('x-middleware-set-cookie');
+        const responseData = await res.json();
+        localStorage.setItem("userEmail", responseData.data.email);
+        localStorage.setItem("userName", responseData.data.name);
+        const token = extractAuthToken(authorizationToken?authorizationToken:"");
+        localStorage.setItem("userToken", token?token:"");
+        router.push("/dashboard");
+      } else{
+        router.push("/auth/sign-in");
       }
 
     }catch (err) {
@@ -59,6 +64,27 @@ e.preventDefault();
     
   };
 
+  function extractAuthToken(cookieString: string): string | null {
+    if (!cookieString || typeof cookieString !== 'string') {
+        return null;
+    }
+    const tokenMatch = cookieString.match(/authToken=([^;]+)/);
+    if (!tokenMatch || tokenMatch.length < 2) {
+        return null;
+    }
+    const token = tokenMatch[1];
+    
+    // Additional JWT validation (basic structure check)
+    if (!isValidTokenStructure(token)) {
+        throw new Error('Extracted token does not appear to be a valid JWT format');
+    }
+    return token;
+}
+
+function isValidTokenStructure(token: string): boolean {
+    // Very basic JWT format check (3 parts separated by dots)
+    return token.split('.').length === 3;
+}
   return (
     <form onSubmit={handleSubmit}>
       <InputGroup
@@ -66,7 +92,7 @@ e.preventDefault();
         label="Email"
         className="mb-4 [&_input]:py-[15px]"
         placeholder="Enter your email"
-        name="email"
+        name="username"
         handleChange={handleChange}
         value={data.email}
         icon={<EmailIcon />}
