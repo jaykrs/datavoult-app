@@ -19,6 +19,7 @@ model User {
   email    String   @unique
   password String
   userrole String @default("guest")
+  isActive Boolean @default(false)
 }
 
 model Page {
@@ -50,4 +51,36 @@ model Product {
   assets   String
   path     String
   manual   String
+  tag      String @default("")
 }
+
+model Order {
+  id       Int      @id @default(autoincrement())
+  productList Json?
+  productIds String
+  orderDate DateTime @db.Date
+  userId Int
+  userEmail String
+  userPhone String
+  orderAmt Int
+  tax Int
+  invoiceJson Json?
+  invoicePath String
+  orderTotal Int
+  paymentStatus Boolean
+  orderStatus String
+  paymentDate DateTime @db.Date
+  transectionId String
+  remakrs String
+}
+
+model userproduct {
+  id       Int      @id @default(autoincrement())
+  userId   Int
+  productId Int
+  cred String
+  startDt DateTime @db.Date
+  endDt DateTime @db.Date
+  remakrs String
+  isActive Boolean
+  }

@@ -1,4 +1,7 @@
 import jwt from 'jsonwebtoken';
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
 
 export function parseAuthCookie(cookie: string | null): string | null {
   if (!cookie) return null;
@@ -18,3 +21,17 @@ export function verifyJwt(token: string) {
     return null;
   }
 }
+
+export async function verifyRole(userId: number): Promise<string> {
+  const user = await findUserById(userId);
+  if (!user) return "";
+  return user.userrole; 
+}
+async function findUserById(userId: number) {
+  return await prisma.user.findUnique({
+        where: {
+            id: userId
+        }
+    })
+}
+

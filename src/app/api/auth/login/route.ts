@@ -21,7 +21,9 @@ export async function POST(request: Request) {
   if (!user) {
     return NextResponse.json({ error: 'User  does not exist' }, { status: 401 });
   }
-
+  if (user.isActive === false) {
+    return NextResponse.json({ error: 'User  is not active' }, { status: 401 });
+  }
   const isPasswordValid = await compare(password, user.password);
   if (!isPasswordValid) {
     return NextResponse.json({ error: 'Incorrect password' }, { status: 401 });
