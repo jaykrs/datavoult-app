@@ -10,7 +10,6 @@ export function RegionLabels() {
       <h2 className="mb-7 text-body-2xlg font-bold text-dark dark:text-white">
         Region labels
       </h2>
-
       <Map />
     </div>
   );

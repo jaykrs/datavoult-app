@@ -33,6 +33,9 @@ export async function GET(request: Request) {
         return NextResponse.json({ error: 'No products found with that tag' }, { status: 404 });
     }
     return NextResponse.json({ message: 'product details', products });
+} else if(searchParams.get('products') && searchParams.get('products') === "all") {
+    const products = await prisma.product.findMany({});
+    return NextResponse.json({ message: 'product list', products });
 }
     // Return a default response or error if no conditions are met
     return NextResponse.json({ error: 'Invalid request parameters' }, { status: 400 });
