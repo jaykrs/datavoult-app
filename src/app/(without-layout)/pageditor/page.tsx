@@ -1,6 +1,9 @@
-
-export default function PageEditor() {
+import Head from 'next/head'
+import Index from './index'
+export default async function PageEditor() {
   return (
     <>
-    "Test"
-    </>)};
+     <Index />
+    </>
+  )
+}

@@ -53,7 +53,8 @@ e.preventDefault();
         localStorage.setItem("userName", responseData.data.name);
         const token = extractAuthToken(authorizationToken?authorizationToken:"");
         localStorage.setItem("userToken", token?token:"");
-        router.push("/dashboard");
+        const redirectPath = responseData.data.role === 'admin' ? "/admin/dashboard" : "/dashboard";
+        router.push(redirectPath);
       } else{
         router.push("/auth/sign-in");
       }

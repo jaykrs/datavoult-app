@@ -9,8 +9,25 @@ import {
 import Image from "next/image";
 import { getTopProducts } from "../fetch";
 
+interface Product {
+  id: number;
+  title: string;
+  content: string;
+  vendor: string;
+  type: string;
+  origin: string;
+  price: number;
+  tax: number;
+  discout: number;
+  assets: string;
+}
+
+
 export async function TopProducts() {
-  const data = await getTopProducts();
+ const _res = await fetch("http://localhost:3000/api/products?tag=vps");
+const res = await _res.json();
+const data: Product[] = res.products;
+ // const data = await getTopProducts();
 
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
@@ -39,28 +56,28 @@ export async function TopProducts() {
           {data.map((product) => (
             <TableRow
               className="text-base font-medium text-dark dark:text-white"
-              key={product.name + product.profit}
+              key={product.id + product.title}
             >
               <TableCell className="flex min-w-fit items-center gap-3 pl-5 sm:pl-6 xl:pl-7.5">
                 <Image
-                  src={product.image}
+                  src={product.assets}
                   className="aspect-[6/5] w-15 rounded-[5px] object-cover"
                   width={60}
                   height={50}
-                  alt={"Image for product " + product.name}
+                  alt={"Image for product " + product.title}
                   role="presentation"
                 />
-                <div>{product.name}</div>
+                <div>{product.title}</div>
               </TableCell>
 
-              <TableCell>{product.category}</TableCell>
+              <TableCell>{product.tax}</TableCell>
 
               <TableCell>${product.price}</TableCell>
 
-              <TableCell>{product.sold}</TableCell>
+              <TableCell>{product.origin}</TableCell>
 
               <TableCell className="pr-5 text-right text-green-light-1 sm:pr-6 xl:pr-7.5">
-                ${product.profit}
+                ${product.origin}
               </TableCell>
             </TableRow>
           ))}

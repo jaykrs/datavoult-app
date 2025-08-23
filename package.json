@@ -18,6 +18,7 @@
     "cookie": "^1.0.2",
     "dayjs": "^1.11.13",
     "flatpickr": "^4.6.13",
+    "grapesjs": "^0.22.12",
     "jsonwebtoken": "^9.0.2",
     "jsvectormap": "^1.6.0",
     "mysql2": "^3.14.1",

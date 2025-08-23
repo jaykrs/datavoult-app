@@ -11,7 +11,7 @@ export default function Contact() {
       </Head>
       <header className="header header-page">
         <Header />
-        <PageHeader title="Contact Us" />
+        {/* <PageHeader title="Contact Us" /> */}
       </header>
       <main className='main'>
         <div className='container'>
